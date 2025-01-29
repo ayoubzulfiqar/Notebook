@@ -109,7 +109,7 @@ Under-fitting happens when a model is too simple and fails to capture the underl
 
 ## Data Preprocessing in Machine Learning
 
-[Code](MachineLearning\CoreConcepts\data_labeling.ipynb)
+[Code](MachineLearning\CoreConcepts\data_processing.ipynb)
 
 ## Data Cleaning
 Data cleaning is the process of handling missing values, detecting and removing outliers, and correcting inconsistencies in data to improve the quality of input for machine learning models.
