@@ -36,7 +36,7 @@
 
 ### **4. Unsupervised Learning Algorithms**
 - **Clustering**:  
-  - **K-means Clustering**: Elbow method for optimal $ k $.  
+  - **K-means Clustering**: Elbow method for optimal  (k).  
   - **Hierarchical Clustering**: Agglomerative and divisive methods.  
   - **DBSCAN**: Density-based clustering.  
 - **Dimensionality Reduction**:  
