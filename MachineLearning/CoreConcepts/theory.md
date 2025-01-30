@@ -246,3 +246,7 @@ Dimensionality reduction reduces the number of input features while retaining es
   - Text: Synonym Replacement, Back Translation  
 
 ---
+
+## Supervised Learning Algorithms
+
+[Code](MachineLearning\CoreConcepts\supervised_learning.ipynb)
