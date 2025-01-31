@@ -250,3 +250,189 @@ Dimensionality reduction reduces the number of input features while retaining es
 ## Supervised Learning Algorithms
 
 [Code](MachineLearning\CoreConcepts\supervised_learning.ipynb)
+
+### **Supervised Learning Algorithms**
+
+Supervised learning is a type of machine learning where the model is trained on labeled data, meaning the input data comes with corresponding output labels. The goal is to learn a mapping from inputs to outputs based on this data.
+
+Supervised learning can be divided into two primary types: **Regression** (predicting continuous outcomes) and **Classification** (predicting discrete categories). Let's explore the key algorithms used in each category.
+
+---
+
+### **Regression Algorithms**
+
+#### **1. Linear Regression**
+
+**Concepts:**
+- Linear regression models the relationship between a dependent variable $ y $ and one or more independent variables $ x $ by fitting a linear equation to the observed data.
+- The general form of the linear regression model is:
+
+$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_n x_n + \epsilon
+$
+
+Where:
+- $ \beta_0 $ is the intercept.
+- $ \beta_1, \beta_2, \dots, \beta_n $ are the coefficients (weights) of the features.
+- $ \epsilon $ is the error term.
+
+**Assumptions:**
+- Linearity: The relationship between the independent and dependent variables is linear.
+- Independence: Observations are independent.
+- Homoscedasticity: Constant variance of errors.
+- Normality: Errors are normally distributed.
+
+**Implementation:**
+The parameters $ \beta_0, \beta_1, \dots $ are estimated using the **Ordinary Least Squares (OLS)** method, which minimizes the sum of squared residuals (differences between observed and predicted values):
+
+$
+\text{RSS} = \sum_{i=1}^n (y_i - \hat{y_i})^2
+$
+
+**Regularization:**
+- **L1 Regularization (Lasso)**: Encourages sparsity by adding the absolute value of the coefficients to the cost function. The objective is to minimize:
+
+$
+\text{Cost} = \sum_{i=1}^n (y_i - \hat{y_i})^2 + \lambda \sum_{j=1}^p |\beta_j|
+$
+
+- **L2 Regularization (Ridge)**: Adds the squared value of coefficients to the cost function to prevent overfitting:
+
+$
+\text{Cost} = \sum_{i=1}^n (y_i - \hat{y_i})^2 + \lambda \sum_{j=1}^p \beta_j^2
+$
+
+#### **2. Polynomial Regression**
+
+**Concept:**
+- Polynomial regression is an extension of linear regression that allows for modeling non-linear relationships by adding polynomial terms of the input features. The equation becomes:
+
+$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_1^2 + \dots + \beta_n x_1^n + \epsilon
+$
+
+Where $ x_1^2, x_1^3, \dots $ are higher-degree terms that capture non-linearity.
+
+**Purpose:**
+- This method helps when the data exhibits a non-linear relationship, but you still want to apply linear regression.
+
+#### **3. Ridge and Lasso Regression**
+
+- **Ridge Regression** (L2 Regularization): Helps prevent overfitting by penalizing large coefficients. The regularization term adds a penalty to the sum of squared coefficients.
+- **Lasso Regression** (L1 Regularization): Similar to ridge, but it can result in sparse models (some coefficients become zero). Lasso is useful for feature selection.
+
+The equations for Ridge and Lasso are as mentioned above.
+
+---
+
+### **Classification Algorithms**
+
+#### **1. Logistic Regression**
+
+**Concept:**
+- Logistic regression is used for binary classification tasks, where the goal is to predict the probability of one class. The logistic function (sigmoid) maps the linear combination of input features to a probability:
+
+$
+p(y = 1|x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \dots + \beta_n x_n)}}
+$
+
+For multi-class classification, **one-vs-rest (OvR)** is used, where a separate binary classifier is trained for each class.
+
+**Mathematical Representation:**
+- Binary case: $ p = \frac{1}{1 + e^{-z}} $ where $ z = \beta_0 + \beta_1 x_1 + \dots + \beta_n x_n $.
+
+#### **2. Support Vector Machines (SVM)**
+
+**Concept:**
+- SVM is a powerful classifier that tries to find the optimal hyperplane that best separates the classes. The goal is to maximize the margin between the support vectors (data points closest to the hyperplane).
+
+**Linear SVM:**
+- The linear SVM tries to find a linear decision boundary:
+
+$
+w \cdot x + b = 0
+$
+
+Where $ w $ is the weight vector and $ b $ is the bias term.
+
+**Kernel SVM:**
+- For non-linearly separable data, the kernel trick is used to map data to a higher-dimensional space where it can be linearly separated.
+- Common kernels include:
+  - **Linear kernel**: $ k(x, x') = x \cdot x' $
+  - **Polynomial kernel**: $ k(x, x') = (x \cdot x' + 1)^d $
+  - **Radial Basis Function (RBF) kernel**: $ k(x, x') = e^{-\gamma ||x - x'||^2} $
+
+#### **3. k-Nearest Neighbors (k-NN)**
+
+**Concept:**
+- k-NN is a simple classification algorithm that assigns the class label based on the majority class among the $ k $ nearest neighbors. The distance between points is calculated using metrics such as Euclidean or Manhattan distance.
+
+**Mathematical Representation:**
+- Distance metric (Euclidean):
+
+$
+d(x, x') = \sqrt{\sum_{i=1}^n (x_i - x'_i)^2}
+$
+
+**Parameter Tuning:**
+- The key parameter is $ k $ (number of neighbors). A smaller $ k $ makes the algorithm sensitive to noise, while a larger $ k $ makes it smoother.
+
+#### **4. Naïve Bayes**
+
+**Concept:**
+- Naïve Bayes is based on Bayes' Theorem and assumes that features are conditionally independent given the class. It's widely used in text classification tasks like spam detection.
+
+Bayes' theorem:
+
+$
+P(C|X) = \frac{P(X|C)P(C)}{P(X)}
+$
+
+Where:
+- $ P(C|X) $ is the posterior probability of class $ C $ given features $ X $.
+- $ P(X|C) $ is the likelihood of features $ X $ given class $ C $.
+- $ P(C) $ is the prior probability of class $ C $.
+- $ P(X) $ is the evidence (normalizing constant).
+
+#### **5. Decision Trees**
+
+**Concept:**
+- Decision trees split the data based on feature values to classify instances. They recursively partition the data and select the best feature to split on, based on certain criteria like **entropy** or **Gini index**.
+
+**Mathematical Measures:**
+- **Entropy** (measure of impurity or disorder):
+
+$
+H(D) = - \sum_{i=1}^{k} p_i \log_2 p_i
+$
+
+- **Gini Index** (another measure of impurity):
+
+$
+Gini(D) = 1 - \sum_{i=1}^{k} p_i^2
+$
+
+#### **6. Random Forest**
+
+**Concept:**
+- Random Forest is an ensemble learning method that combines multiple decision trees to improve accuracy and reduce overfitting. Each tree is trained on a random subset of features and data (bootstrap sampling).
+
+**Mathematical Representation:**
+- Random forests aggregate the predictions of many decision trees, often using **majority voting** (for classification) or **averaging** (for regression).
+
+---
+
+### **Summary of Supervised Learning Algorithms**
+
+#### **Regression Algorithms:**
+- **Linear Regression**: Simple model, assumes linear relationships.
+- **Polynomial Regression**: Extends linear regression for non-linear data.
+- **Ridge and Lasso Regression**: Regularized linear models to prevent over-fitting.
+
+#### **Classification Algorithms:**
+- **Logistic Regression**: Binary and multi-class classification.
+- **Support Vector Machines (SVM)**: Linear and kernel-based classifiers.
+- **k-Nearest Neighbors (k-NN)**: Instance-based learning using distance metrics.
+- **Naïve Bayes**: Probabilistic classifier, assumes feature independence.
+- **Decision Trees**: Hierarchical classification based on feature splits.
+- **Random Forest**: Ensemble of decision trees, improves robustness and accuracy.
