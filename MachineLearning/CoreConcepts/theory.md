@@ -436,3 +436,192 @@ $
 - **Naïve Bayes**: Probabilistic classifier, assumes feature independence.
 - **Decision Trees**: Hierarchical classification based on feature splits.
 - **Random Forest**: Ensemble of decision trees, improves robustness and accuracy.
+
+
+---
+
+## **Unsupervised Learning Algorithms**
+
+Unsupervised learning involves **finding patterns in data** without labeled responses. The primary categories include **clustering, dimensionality reduction, and association rule learning**.
+
+---
+
+## **1. Clustering Algorithms**
+Clustering is the process of **grouping similar data points** based on some similarity measure.
+
+### **1.1 K-Means Clustering**
+K-Means clustering partitions data into **$ k $ clusters** by minimizing intra-cluster variance.
+
+#### **Mathematical Formulation**
+1. **Initialize $ k $ centroids** randomly.
+2. **Assign each data point** $ x_i $ to the nearest centroid $ c_j $:
+
+   $
+   c_i = \arg\min_{j} ||x_i - \mu_j||^2
+   $
+
+3. **Update centroids** by computing the mean of assigned points:
+
+   $
+   \mu_j = \frac{1}{|C_j|} \sum_{x_i \in C_j} x_i
+   $
+
+4. **Repeat steps 2 and 3** until convergence.
+
+#### **Elbow Method for Choosing $ k $**
+The **within-cluster sum of squares (WCSS)** is minimized:
+
+$
+WCSS = \sum_{j=1}^{k} \sum_{x_i \in C_j} ||x_i - \mu_j||^2
+$
+
+The optimal $ k $ is chosen at the "elbow" point where adding more clusters **does not significantly decrease WCSS**.
+
+---
+
+### **1.2 Hierarchical Clustering**
+Hierarchical clustering builds a **tree of clusters** using two methods:
+
+1. **Agglomerative (Bottom-Up)**: Start with **each point as its own cluster**, then **merge** the closest clusters iteratively.
+2. **Divisive (Top-Down)**: Start with **one large cluster** and **recursively split** it into smaller clusters.
+
+#### **Linkage Criteria**
+To merge clusters, different distance metrics are used:
+
+1. **Single Linkage (Min Distance)**:
+   $
+   d(A, B) = \min_{x \in A, y \in B} ||x - y||
+   $
+
+2. **Complete Linkage (Max Distance)**:
+   $
+   d(A, B) = \max_{x \in A, y \in B} ||x - y||
+   $
+
+3. **Average Linkage**:
+   $
+   d(A, B) = \frac{1}{|A| |B|} \sum_{x \in A} \sum_{y \in B} ||x - y||
+   $
+
+---
+
+### **1.3 DBSCAN (Density-Based Spatial Clustering of Applications with Noise)**
+DBSCAN clusters points based on **density** instead of distance.
+
+#### **Mathematical Definitions**
+- A **point $ x_i $ is a core point** if it has at least **$ MinPts $** neighbors within radius $ \epsilon $:
+  
+  $
+  |N_{\epsilon}(x_i)| \geq MinPts
+  $
+
+- A **point $ x_j $ is directly reachable** from $ x_i $ if:
+
+  $
+  ||x_i - x_j|| \leq \epsilon
+  $
+
+- A **point is noise** if it is neither a core point nor reachable.
+
+---
+
+## **2. Dimensionality Reduction**
+Dimensionality reduction reduces the number of features while **retaining the most important information**.
+
+### **2.1 Principal Component Analysis (PCA)**
+PCA transforms high-dimensional data into **principal components** that maximize variance.
+
+#### **Mathematical Formulation**
+1. **Standardize the Data**:
+   $
+   X' = \frac{X - \mu}{\sigma}
+   $
+
+2. **Compute the Covariance Matrix**:
+   $
+   C = \frac{1}{n} X^T X
+   $
+
+3. **Find Eigenvalues and Eigenvectors**:
+   $
+   C v = \lambda v
+   $
+
+   - Eigenvectors $ v $ represent **principal components**.
+   - Eigenvalues $ \lambda $ represent the **variance explained**.
+
+4. **Select the Top $ k $ Components**:
+   $
+   Z = X V_k
+   $
+
+   Where $ V_k $ is the matrix of the top $ k $ eigenvectors.
+
+---
+
+### **2.2 t-SNE (t-Distributed Stochastic Neighbor Embedding)**
+t-SNE is a **non-linear** technique for visualizing **high-dimensional data**.
+
+#### **Mathematical Formulation**
+1. Compute **pairwise similarities** in high-dimensional space:
+
+   $
+   p_{j|i} = \frac{\exp(-||x_i - x_j||^2 / 2\sigma^2)}{\sum_{k \neq i} \exp(-||x_i - x_k||^2 / 2\sigma^2)}
+   $
+
+2. Map points to **low-dimensional space** such that the probabilities match:
+
+   $
+   q_{j|i} = \frac{(1 + ||y_i - y_j||^2)^{-1}}{\sum_{k \neq i} (1 + ||y_i - y_k||^2)^{-1}}
+   $
+
+3. Minimize **Kullback-Leibler (KL) divergence**:
+
+   $
+   KL(P || Q) = \sum_{i} \sum_{j} p_{j|i} \log \frac{p_{j|i}}{q_{j|i}}
+   $
+
+---
+
+## **3. Association Rules**
+Association rule learning finds patterns in **transactional data**.
+
+### **3.1 Apriori Algorithm**
+The Apriori algorithm finds frequent itemsets and generates rules.
+
+#### **Mathematical Formulation**
+1. **Support**: Frequency of an itemset $ X $:
+
+   $
+   Support(X) = \frac{\text{Transactions containing } X}{\text{Total Transactions}}
+   $
+
+2. **Confidence**: Probability of finding $ Y $ given $ X $:
+
+   $
+   Confidence(X \Rightarrow Y) = \frac{Support(X \cup Y)}{Support(X)}
+   $
+
+3. **Lift**: How much $ X $ improves chances of $ Y $:
+
+   $
+   Lift(X \Rightarrow Y) = \frac{Confidence(X \Rightarrow Y)}{Support(Y)}
+   $
+
+**Steps of Apriori Algorithm**:
+1. **Generate frequent itemsets** using the support threshold.
+2. **Generate rules** from frequent itemsets.
+3. **Filter rules** using confidence and lift.
+
+---
+
+# **Conclusion**
+| **Algorithm** | **Purpose** | **Mathematical Approach** |
+|--------------|------------|----------------|
+| **K-Means** | Partition data into $ k $ clusters | Minimizes intra-cluster variance |
+| **Hierarchical** | Tree-based clustering | Linkage criteria (single, complete, average) |
+| **DBSCAN** | Density-based clustering | Core points, reachability, noise |
+| **PCA** | Reduce dimensionality | Eigenvectors & eigenvalues of covariance matrix |
+| **t-SNE** | Visualize high-dimensional data | KL divergence minimization |
+| **Apriori** | Find association rules | Support, confidence, and lift |
+
